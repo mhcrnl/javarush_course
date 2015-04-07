@@ -24,6 +24,7 @@ public class Solution
         plot.add(new Person("Внучка", "Внучку"));
         RepkaStory.tell(plot);
     }
+<<<<<<< HEAD
     public static class Person implements RepkaItem
     {
         public String getNamePadezh();
@@ -31,4 +32,6 @@ public class Solution
             System.out.println("");
         }
     }
+=======
+>>>>>>> 94bc308cbb890562561fdb13906956b26bfd92aa
 }

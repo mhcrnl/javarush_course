@@ -11,7 +11,6 @@ public class Solution {
     public static void main(String[] args) {
         new B(6);
     }
-
     public static class A {
         private int f1 = 7;
 

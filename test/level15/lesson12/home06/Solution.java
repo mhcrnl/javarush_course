@@ -1,57 +1,41 @@
-package com.javarush.test.level15.lesson12.home06;
+package com.javarush.test.level15.lesson12.home08;
 
-/* Порядок загрузки переменных
-Разобраться, что в какой последовательности инициализируется.
-Исправить порядок инициализации данных так, чтобы результат был следующим:
-static void init()
-Static block
-public static void main
-non-static block
-static void printAllFields
-0
-null
-Solution constructor
-static void printAllFields
-6
-First name
+/* Дебаг, дебаг, и еще раз дебаг
+Программа выводит 0 9, а должна 6 9. Найди одну! ошибку и исправь.
+Используй дебаг. Для этого поставь breakpoint-ы(Ctrl+F8), потом зайди в меню Run -> Debug.
+F9 - выполнение кода до следующего breakpoint-а
+F8 - переход к следующей строке кода
 */
 
 public class Solution {
-    static {
-        init();
-    }
-    static {
-        System.out.println("Static block");
-    }
     public static void main(String[] args) {
-        System.out.println("public static void main");
-        Solution s = new Solution();
+        new B(6);
     }
-    {
-        System.out.println("non-static block");
-        printAllFields(this);
-    }
-    public static void printAllFields(Solution obj) {
-        System.out.println("static void printAllFields");
-        System.out.println(obj.i);
-        System.out.println(obj.name);
+    public static class A {
+        private int f1 = 7;
 
-    }
-    public int i = 6;
+        public A(int f1) {
+            this.f1 = f1;
+            initialize();
+        }
 
-    public String name = "First name";
-
-
-    public Solution() {
-        System.out.println("Solution constructor");
-        printAllFields(this);
+        private void initialize() {
+            System.out.println(f1);
+        }
     }
 
-    public static void init() {
-        System.out.println("static void init()");
+    public static class B extends A {
+        public int f1 = 3;
+
+        public B(int f1) {
+            super(f1);
+            this.f1 += f1;
+            initialize();
+        }
+
+        protected void initialize() {
+            System.out.println(f1);
+        }
     }
-
-
-
-
 }
+

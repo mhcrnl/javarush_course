@@ -3,8 +3,11 @@ package com.javarush.test.level17.lesson10.bonus01;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+<<<<<<< HEAD
 import java.text.DateFormat;
 import java.text.ParseException;
+=======
+>>>>>>> 11cbfbce118bdce059d54d8e1e4975c40bf25b40
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,6 +46,7 @@ public class Solution {
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+<<<<<<< HEAD
         while (true) {
             String command = reader.readLine();
             if (command.equals(null)) break;
@@ -113,6 +117,69 @@ public class Solution {
         }
         reader.close();
 
+=======
+        String command = reader.readLine();
+        String typeOperation = command.substring(0,2);
+        command = command.substring(3);
+        if (typeOperation.equals("-c")) {
+            String name = command.substring(0, command.indexOf(" "));
+            command = command.substring(command.indexOf(" ")+1);
+            Sex sex = null;
+            String sexString = command.substring(0, 1);
+            String dateString = command.substring(2);
+            Date bd = new Date(dateString);
+            if (sexString.equals("м")) {
+                Person man = Person.createMale(name, bd);
+                allPeople.add(man);
+            }
+            else if (sexString.equals("ж")) {
+                Person woman = Person.createFemale(name, bd);
+                allPeople.add(woman);
+            }
+        }
+        else if (typeOperation.equals("-u")) {
+            int id = Integer.parseInt(command.substring(0, command.indexOf(" ")));
+            Person person = allPeople.get(id);
+            command = command.substring(command.indexOf(" ")+1);
+            String name = command.substring(0, command.indexOf(" "));
+            command = command.substring(command.indexOf(" ")+1);
+            Sex sex = null;
+            String sexString = command.substring(0, 1);
+            String dateString = command.substring(2);
+            Date bd = new Date(dateString);
+
+            if (sexString.equals("м")) {
+                sex = Sex.MALE;
+                person.setSex(sex);
+            }
+            else if (sexString.equals("ж")) {
+                sex = Sex.FEMALE;
+                person.setSex(sex);
+            }
+            person.setName(name);
+            person.setBirthDay(bd);
+        }
+        else if (typeOperation.equals("-d")) {
+            int id = Integer.parseInt(command);
+            allPeople.remove(id);
+        }
+        else if (typeOperation.equals("-i")) {
+            int id = Integer.parseInt(command);
+            Person person = allPeople.get(id);
+            Sex sex = person.getSex();
+            String sexString = "";
+            String format = "dd-MMM-YYYY";
+            SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.ENGLISH);
+
+            if (sex==Sex.MALE) {
+                sexString = "м";
+            }
+            else if (sex==Sex.FEMALE) {
+                sexString = "ж";
+            }
+            System.out.println(person.getName()+" "+sexString+" "+dateFormat.format(person.getBirthDay()));
+        }
+>>>>>>> 11cbfbce118bdce059d54d8e1e4975c40bf25b40
         //start here - начни тут
     }
 }

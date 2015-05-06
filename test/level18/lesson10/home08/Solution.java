@@ -1,8 +1,7 @@
 package com.javarush.test.level18.lesson10.home08;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /* Нити и байты
 Читайте с консоли имена файлов, пока не будет введено слово "exit"
@@ -26,7 +25,6 @@ public class Solution {
             }
         }
         reader.close();
-
     }
 
     public static class ReadThread extends Thread {
@@ -42,39 +40,25 @@ public class Solution {
         {
             try {
                 FileInputStream fis = new FileInputStream(this.fileName);
-                byte[] buffer = new byte[fis.available()];
-                while (fis.available()>0) {
-                    fis.read(buffer);
+                ArrayList<Integer> list = new ArrayList<Integer>();
+                while (fis.available()>0){
+                    int data = fis.read();
+                    list.add(data);
                 }
 
-                int[] countMyBytes = new int[127];
-                for (int i=0; i<buffer.length; i++) {
-                    countMyBytes[buffer[i]]+=1;
-                }
-
-                int maxCountByte = countMyBytes[0];
-                for (int j=0; j<countMyBytes.length; j++) {
-                    if (countMyBytes[j]>maxCountByte) {
-                        maxCountByte = countMyBytes[j];
+                int maxByte = 0;
+                int maxCount = 0;
+                int count = 0;
+                for (int i=0; i<list.size(); i++) {
+                    count = Collections.frequency(list, list.get(i));
+                    if (count>maxCount) {
+                        maxCount=count;
+                        maxByte=list.get(i);
                     }
                 }
-
-                for (int k=0; k<countMyBytes.length; k++) {
-                    if (countMyBytes[k]==maxCountByte) {
-                        synchronized (resultMap) {
-                            resultMap.put(this.fileName, k);
-                        }
-                    }
-                }
-
-                fis.close();
-
+                resultMap.put(this.fileName, maxByte);
             }
-            catch (FileNotFoundException e) {
-
-            }
-            catch (IOException e) {
-
+            catch (Exception e) {
             }
         }
 

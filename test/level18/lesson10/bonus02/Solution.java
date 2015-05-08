@@ -22,23 +22,26 @@ id productName price quantity
 19847983Куртка для сноубордистов, разм10173.991234
 */
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Solution {
     static int id=0;
+
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String fileName = reader.readLine();
         if (args[0].equals("-c")) {
-            Product product = new Product(args[1], args[args.length-2], args[args.length-1]);
-            FileOutputStream fos = new FileOutputStream(fileName, true);
-            fos.write((product.toString()).getBytes());
-            fos.write((byte)10);
-            fos.close();
+            id++;
+            String productName="";
+            for (int i = 1; i < args.length - 2; i++) {
+                productName  = productName + args[i] + " ";
+            }
+            Product product = new Product(productName, args[args.length - 2], args[args.length - 1]);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            writer.write(product+"\n");
+            writer.close();
         }
+        reader.close();
     }
     public static class Product {
         int myId=0;
@@ -47,7 +50,6 @@ public class Solution {
         String quantity;
 
         Product(String productName, String price, String quantity) {
-            id++;
             this.myId=id;
             this.productName=productName;
             this.price=price;

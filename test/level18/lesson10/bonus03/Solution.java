@@ -26,11 +26,13 @@ id productName price quantity
 
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Solution {
     public static void main(String[] args) throws Exception {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String fileName = bufferedReader.readLine();
+
         File file = new File(fileName);
         bufferedReader.close();
 
@@ -41,13 +43,10 @@ public class Solution {
         } else return;
     }
 
-    private static File update(File fileName, String[] array) throws Exception {
+    private static void update(File fileName, String[] array) throws Exception {
+        ArrayList<String> list = new ArrayList<String>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
         String line="";
-        File fileTemp = new File("C:/fileTemp.txt");
-        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileTemp, true)));
-
-
         while ((line=bufferedReader.readLine()) != null) {
             String temp = line.substring(0, 8).replaceAll("\\s", "");
             if (temp.equals(array[1])) {
@@ -58,38 +57,40 @@ public class Solution {
                 String newPrice = setSpaces(array[array.length-2], 8);
                 String newQuantity = setSpaces(array[array.length-1], 4);
                 String newId = setSpaces(array[1], 8);
-                printWriter.println(newId+newProductName+newPrice+newQuantity);
+                list.add(newId + newProductName + newPrice + newQuantity);
             }
             else {
-                printWriter.println(line);
+                list.add(line);
             }
         }
-        bufferedReader.close();
-        printWriter.close();
-        fileName.delete();
-        fileTemp.renameTo(fileName);
-        return fileTemp;
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+        for (int i = 0; i <list.size() ; i++){
+            bw.write(list.get(i));
+            bw.newLine();
+        }
+        bw.close();
     }
 
-    private static File delete(File fileName, String id) throws Exception {
+    private static void delete(File fileName, String id) throws Exception {
+        ArrayList<String> list = new ArrayList<String>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
         String line="";
-        File fileTemp = new File("C:/fileTemp.txt");
-        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileTemp, true)));
         while ((line=bufferedReader.readLine()) != null) {
             String temp = line.substring(0, 8).replaceAll("\\s", "");
             if (!temp.equals(id)) {
-                printWriter.println(line);
+                list.add(line);
             }
             else {
                 continue;
             }
         }
         bufferedReader.close();
-        printWriter.close();
-        fileName.delete();
-        fileTemp.renameTo(fileName);
-        return fileTemp;
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+        for (int i = 0; i <list.size() ; i++){
+            bw.write(list.get(i));
+            bw.newLine();
+        }
+        bw.close();
     }
 
     public static String setSpaces (String previousName, int count) {

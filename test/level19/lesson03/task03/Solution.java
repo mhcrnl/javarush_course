@@ -10,13 +10,66 @@ CA Canada
 Дополнить телефонный номер нулями до 10 цифр при необходимости
 */
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Solution {
     public static Map<String,String> countries = new HashMap<String,String>();
 
-    public static class IncomeDataAdapter {
+    static {
+        countries.put("UA", "Ukraine");
+        countries.put("RU", "Russia");
+        countries.put("CA", "Canada");
+    }
+
+    public static class IncomeDataAdapter implements Customer, Contact {
+        private IncomeData incomeData;
+        public IncomeDataAdapter(IncomeData data) {
+            incomeData=data;
+        }
+
+        @Override
+        public String getName()
+        {
+            return incomeData.getContactLastName()+", "+incomeData.getContactFirstName();
+        }
+
+        @Override
+        public String getPhoneNumber()
+        {
+            String tempPhoneNumber = String.valueOf(incomeData.getPhoneNumber());
+
+            if (tempPhoneNumber.length() < 10)
+            {
+                String nulls = "";
+                for (int i = 0; i < (10 - tempPhoneNumber.length()); i++)
+                {
+                    nulls += "0";
+                }
+                tempPhoneNumber = nulls + tempPhoneNumber;
+            }
+            return "+" + incomeData.getCountryPhoneCode() + "(" + tempPhoneNumber.substring(0, 3) + ")" +
+                    tempPhoneNumber.substring(3, 6) + "-" + tempPhoneNumber.substring(6, 8) + "-" + tempPhoneNumber.substring(8);
+        }
+
+        @Override
+        public String getCompanyName()
+        {
+            return incomeData.getCompany();
+        }
+
+        @Override
+        public String getCountryName()
+        {
+            String coutryName = "";
+            for (Map.Entry<String, String> pair: countries.entrySet()) {
+                if (incomeData.getCountryCode().equals(pair.getKey())) {
+                    coutryName = pair.getValue();
+                }
+            }
+            return coutryName;
+        }
     }
 
     public static interface IncomeData {

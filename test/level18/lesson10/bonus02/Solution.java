@@ -23,43 +23,59 @@ id productName price quantity
 */
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Solution {
-    static int id=0;
-
     public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String fileName = reader.readLine();
-        if (args[0].equals("-c")) {
-            id++;
-            String productName="";
-            for (int i = 1; i < args.length - 2; i++) {
-                productName  = productName + args[i] + " ";
-            }
-            Product product = new Product(productName, args[args.length - 2], args[args.length - 1]);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            writer.write(product+"\n");
-            writer.close();
-        }
-        reader.close();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = bufferedReader.readLine();
+        bufferedReader.close();
+        String productName = "";
+
+        for (int i = 1; i < args.length-2; i++)
+            productName = productName + args[i] + " ";
+
+        String trueProductName = setSpaces(productName, 30);
+        String truePrice = setSpaces(args[args.length-2], 8);
+        String trueQuantity = setSpaces(args[args.length-1], 4);
+        String trueId = getId(fileName);
+        trueId = setSpaces(trueId, 8);
+
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+        printWriter.println(trueId + trueProductName + truePrice + trueQuantity);
+        printWriter.close();
+
     }
-    public static class Product {
-        int myId=0;
-        String productName;
-        String price;
-        String quantity;
 
-        Product(String productName, String price, String quantity) {
-            this.myId=id;
-            this.productName=productName;
-            this.price=price;
-            this.quantity=quantity;
+    public static String getId (String fileName) throws IOException {
+        ArrayList<Long> allIds = new ArrayList<Long>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        String line;
+        Long currentId;
+        while ((line=bufferedReader.readLine()) != null) {
+            line = line.substring(0, 8).replaceAll("\\s", "");
+            currentId = Long.parseLong(line);
+            allIds.add(currentId);
         }
+        bufferedReader.close();
+        Long maxId = Collections.max(allIds);
+        Long MyId = maxId+1;
+        return MyId.toString();
+    }
 
-        @Override
-        public String toString()
+
+    public static String setSpaces (String previousName, int count) {
+        String trueName;
+        if (previousName.length()>count)
+            trueName = previousName.substring(0, count);
+        else
         {
-            return String.format("%-8d%-30.30s%-8.8s%-4.4s", myId, productName, price, quantity);
+            String s="";
+            for (int i = 0; i < (count  - previousName.length()); i++)
+                s = s+ " ";
+            trueName = previousName+s;
         }
+        return trueName;
     }
 }

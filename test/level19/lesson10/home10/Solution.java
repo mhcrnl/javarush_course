@@ -4,8 +4,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/* РСЃРїСЂР°РІРёС‚СЊ РѕС€РёР±РєСѓ
-РџСЂРѕРіСЂР°РјРјР° СЃРѕРґРµСЂР¶РёС‚ РІСЃРµРіРѕ 1 РѕС€РёР±РєСѓ. РќР°Р№РґРё Рё РёСЃРїСЂР°РІСЊ РµРµ
+/* Исправить ошибку
+Программа содержит всего 1 ошибку. Найди и исправь ее
 */
 
 public class Solution {
@@ -42,7 +42,7 @@ public class Solution {
                 }
             }
 
-            if (result instanceof A) {
+            if (result instanceof C) {
                 C p = (C) result;
                 System.out.println(p.getClass().getSimpleName());
             }

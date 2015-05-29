@@ -1,4 +1,4 @@
-package com.javarush.test.level15.lesson12.home08;
+package com.javarush.test.level15.lesson12.home06;
 
 /* Дебаг, дебаг, и еще раз дебаг
 Программа выводит 0 9, а должна 6 9. Найди одну! ошибку и исправь.

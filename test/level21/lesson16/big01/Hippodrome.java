@@ -20,7 +20,7 @@ public class Hippodrome
         for (int i=0; i<100; i++) {
             this.move();
             this.print();
-            Thread.sleep(50);
+            Thread.sleep(100);
         }
     }
     public void move() {

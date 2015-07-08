@@ -10,11 +10,13 @@ package com.javarush.test.level22.lesson13.task03;
 5) скобки внутри содержат четко 3 цифры
 6) номер не содержит букв
 7) номер заканчивается на цифру
+
 Примеры:
 +380501234567 - true
 +38(050)1234567 - true
 +38050123-45-67 - true
 050123-4567 - true
+
 +38)050(1234567 - false
 +38(050)1-23-45-6-7 - false
 050ххх4567 - false
@@ -24,9 +26,6 @@ package com.javarush.test.level22.lesson13.task03;
 public class Solution {
 
     public static boolean checkTelNumber(String telNumber) {
-        boolean plusAtTheBeginning = telNumber.matches("^+");
-        boolean only10Digit = (telNumber.matches("^d") || telNumber.matches("^\\(")) && telNumber.matches("\\d{10}");
-        boolean numberOfHyphen = telNumber.matches("-{0,2}");
-        return ();
+        return false;
     }
 }

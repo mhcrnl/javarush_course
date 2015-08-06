@@ -16,6 +16,20 @@ public class Solution {
     protected Lock lock = new ReentrantLock();
 
     public void someMethod() {
+        if (lock.tryLock()) {
+            try
+            {
+                ifLockIsFree();
+                // доступ к защищенному ресурсу
+            }
+            finally
+            {
+                lock.unlock();
+            }
+        }
+        else {
+            ifLockIsBusy();
+        }
         //implement logic here, use the lock field
     }
 
